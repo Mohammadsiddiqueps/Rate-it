@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function ReviewForm({ onAdd, onCancel, initialData }) {
-    const [formData, setFormData] = useState(() => {
-        if (initialData) {
-            return {
-                title: initialData.title || "",
-                description: initialData.description || "",
-                rating: initialData.rating || 5,
-            };
-        }
-        return { title: "", description: "", rating: 5 };
+    const [formData, setFormData] = useState({
+        title: initialData?.title || "",
+        description: initialData?.description || "",
+        rating: initialData?.rating || 5,
     });
+
+    useEffect(() => {
+        setFormData({
+            title: initialData?.title || "",
+            description: initialData?.description || "",
+            rating: initialData?.rating || 5,
+        });
+    }, [initialData]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

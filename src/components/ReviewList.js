@@ -11,8 +11,8 @@ export default function ReviewList({reviews, onEdit, onDelete}) {
         marginTop: "20px",
       }}
     >
-      {reviews.map((rev) => (
-        <ReviewItem key={rev.id} review={rev} onEdit={onEdit} onDelete={onDelete} />
+      {reviews.map((review) => (
+        <ReviewItem key={review.id} review={review} onEdit={onEdit} onDelete={onDelete} />
       ))}
     </div>
   );

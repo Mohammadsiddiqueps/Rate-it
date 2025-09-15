@@ -7,9 +7,10 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [editingReview, setEditingReview] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleDelete = (id) => {
-    setReviews(reviews.filter((r) => r.id !== id));
+    setReviews(reviews.filter((review) => review.id !== id));
   };
 
   const handleEditClick = (review) => {
@@ -31,14 +32,41 @@ function App() {
     setShowForm(false);
   };
 
+  const filteredReviews = reviews.filter(review =>
+    review.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <h1>Welcome to Rateit</h1>
-      <button
-        onClick={() => setShowForm(true)}
-      >
-        Add Review
-      </button>
+      <div style={{ marginBottom: "16px" }}>
+        <input
+          type="text"
+          placeholder="Search by title..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          style={{
+            padding: "8px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            width: "220px",
+            marginRight: "12px"
+          }}
+        />
+        <button
+          onClick={() => setShowForm(true)}
+          style={{
+            padding: "8px 16px",
+            border: "none",
+            borderRadius: "4px",
+            background: "#2e7eff",
+            color: "white",
+            cursor: "pointer"
+          }}
+        >
+          Add Review
+        </button>
+      </div>
 
       {showForm && (
         <ReviewForm
@@ -50,9 +78,8 @@ function App() {
           initialData={editingReview}
         />
       )}
-      <ReviewList reviews={reviews} onEdit={handleEditClick} onDelete={handleDelete} />
+      <ReviewList reviews={filteredReviews} onEdit={handleEditClick} onDelete={handleDelete} />
     </>
-
   );
 }
 
