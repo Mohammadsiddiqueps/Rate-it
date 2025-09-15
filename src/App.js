@@ -6,9 +6,28 @@ import ReviewList from './components/ReviewList';
 function App() {
   const [showForm, setShowForm] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [editingReview, setEditingReview] = useState(null);
+
+  const handleDelete = (id) => {
+    setReviews(reviews.filter((r) => r.id !== id));
+  };
+
+  const handleEditClick = (review) => {
+    setEditingReview(review);
+    setShowForm(true);
+  };
 
   const handleAddReview = (review) => {
-    setReviews([...reviews, review]);
+    if (editingReview) {
+      setReviews(
+        reviews.map((r) =>
+          r.id === editingReview.id ? { ...review, id: editingReview.id } : r
+        )
+      );
+      setEditingReview(null);
+    } else {
+      setReviews([...reviews, { ...review, id: Date.now() }]);
+    }
     setShowForm(false);
   };
 
@@ -22,9 +41,16 @@ function App() {
       </button>
 
       {showForm && (
-        <ReviewForm onAdd={handleAddReview} onCancel={() => setShowForm(false)} />
+        <ReviewForm
+          onAdd={handleAddReview}
+          onCancel={() => {
+            setShowForm(false);
+            setEditingReview(null);
+          }}
+          initialData={editingReview}
+        />
       )}
-      <ReviewList reviews={reviews} />
+      <ReviewList reviews={reviews} onEdit={handleEditClick} onDelete={handleDelete} />
     </>
 
   );

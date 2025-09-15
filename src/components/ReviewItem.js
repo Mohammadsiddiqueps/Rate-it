@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ReviewItem({ review }) {
+export default function ReviewItem({review, onEdit, onDelete}) {
   return (
     <div
       style={{
@@ -23,6 +23,13 @@ export default function ReviewItem({ review }) {
       <p style={{ margin: 0, fontWeight: "bold", fontSize: "14px", color: "#007BFF" }}>
         Rating: {review.rating}
       </p>
+
+      <div>
+        <button onClick={() => onEdit(review)} style={{ marginRight: "6px" }}>
+          Edit
+        </button>
+        <button onClick={() => onDelete(review.id)}>Delete</button>
+      </div>
     </div>
   );
 }

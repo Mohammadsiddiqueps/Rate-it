@@ -1,7 +1,7 @@
 import React from "react";
 import ReviewItem from "./ReviewItem";
 
-export default function ReviewList({ reviews }) {
+export default function ReviewList({reviews, onEdit, onDelete}) {
   return (
     <div
       style={{
@@ -11,8 +11,8 @@ export default function ReviewList({ reviews }) {
         marginTop: "20px",
       }}
     >
-      {reviews.map((rev, idx) => (
-        <ReviewItem key={idx} review={rev} />
+      {reviews.map((rev) => (
+        <ReviewItem key={rev.id} review={rev} onEdit={onEdit} onDelete={onDelete} />
       ))}
     </div>
   );

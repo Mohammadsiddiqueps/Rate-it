@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 
-export default function ReviewForm({ onAdd, onCancel }) {
-    const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        rating: 5,
+export default function ReviewForm({ onAdd, onCancel, initialData }) {
+    const [formData, setFormData] = useState(() => {
+        if (initialData) {
+            return {
+                title: initialData.title || "",
+                description: initialData.description || "",
+                rating: initialData.rating || 5,
+            };
+        }
+        return { title: "", description: "", rating: 5 };
     });
 
     const handleChange = (e) => {
